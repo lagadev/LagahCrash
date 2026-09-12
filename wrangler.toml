@@ -4,19 +4,15 @@ compatibility_date = "2024-11-01"
 compatibility_flags = ["nodejs_compat"]
 
 # ---------------------------------------------------------------------------
-# Static Mini App files (index.html = crash game, admin.html = admin panel)
-# are served straight from ./public. Routes that must hit the Worker instead
-# of the static files are listed in run_worker_first.
+# Static Mini App files
 # ---------------------------------------------------------------------------
 [assets]
 directory = "./public"
 binding = "ASSETS"
-run_worker_first = ["/webhook", "/setup-webhook", "/api/*"]
+run_worker_first = true
 
 # ---------------------------------------------------------------------------
-# D1 database — create with:
-#   wrangler d1 create lagah-crash-bot-db
-# then paste the returned database_id below.
+# D1 database
 # ---------------------------------------------------------------------------
 [[d1_databases]]
 binding = "DB"
@@ -24,7 +20,7 @@ database_name = "lagah-crash-bot-db"
 database_id = "676dfbce-284f-4fde-adf3-99988024d99c"
 
 # ---------------------------------------------------------------------------
-# Durable Object running the shared Crash game loop.
+# Durable Object
 # ---------------------------------------------------------------------------
 [[durable_objects.bindings]]
 name = "CRASH_ROOM"
@@ -35,15 +31,7 @@ tag = "v1"
 new_classes = ["CrashRoom"]
 
 # ---------------------------------------------------------------------------
-# Secrets (set with `wrangler secret put NAME`, never commit real values):
-#   BOT_TOKEN            Telegram bot token from @BotFather (for LagahCrashBot)
-#   BOT_USERNAME         Bot username without @, used to build referral links
-#   WEBHOOK_SECRET       Random string, checked against Telegram's
-#                        X-Telegram-Bot-Api-Secret-Token header
-#   ADMIN_IDS            Comma-separated Telegram numeric user IDs
-#   MINI_APP_BASE_URL    e.g. https://lagah-crash-bot.<you>.workers.dev
-#   PAYLINK_API_BASE     PayLink base URL, e.g. https://uglypay.devugly.workers.dev
-#   PAYLINK_API_KEY      Your PayLink merchant API key
+# Environment variables
 # ---------------------------------------------------------------------------
 [vars]
 REF_BONUS_PERCENT = "10"
