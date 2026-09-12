@@ -28,7 +28,7 @@ class_name = "CrashRoom"
 
 [[migrations]]
 tag = "v1"
-new_classes = ["CrashRoom"]
+new_sqlite_classes = ["CrashRoom"]
 
 # ---------------------------------------------------------------------------
 # Environment variables
