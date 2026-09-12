@@ -21,7 +21,7 @@ run_worker_first = ["/webhook", "/setup-webhook", "/api/*"]
 [[d1_databases]]
 binding = "DB"
 database_name = "lagah-crash-bot-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "676dfbce-284f-4fde-adf3-99988024d99c"
 
 # ---------------------------------------------------------------------------
 # Durable Object running the shared Crash game loop.
