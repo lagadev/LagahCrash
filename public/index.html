@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>LagahCrashBot</title>
+<link rel="stylesheet" href="/css/main.css" />
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<div id="app">
+  <div class="tab-screen active">
+
+    <!-- Top bar: connection status · balance pill · avatar -->
+    <div class="topbar">
+      <div class="balance-pill" id="conn-pill" style="padding:8px;gap:6px">
+        <span id="conn-dot" style="width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block"></span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.7"><path d="M2 8.5C7 3.5 17 3.5 22 8.5M5.5 12C9 8.5 15 8.5 18.5 12M9 15.5C10.5 14 13.5 14 15 15.5M12 19H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+
+      <div class="balance-pill">
+        <span class="star-ic lg"><img src="/assets/bdt.png" alt="৳" /></span>
+        <span id="balance-amt">0.00</span>
+        <button class="plus" id="deposit-btn" title="Deposit">
+          <span class="icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span>
+        </button>
+      </div>
+
+      <div class="avatar" id="avatar">?</div>
+    </div>
+
+    <!-- History chips -->
+    <div class="history-row" id="history-row"></div>
+
+    <!-- Crash stage -->
+    <div class="stage">
+      <div class="connecting-overlay" id="connecting-overlay">
+        <div class="spinner"></div>
+        <div class="txt">Connecting…</div>
+        <div class="sub">Joining the room</div>
+      </div>
+
+      <div class="flight-track">
+        <div class="rocket-visual emoji-fallback" id="rocket" style="display:none">🚀</div>
+        <div class="crash-visual emoji-fallback" id="crash-emoji" style="display:none">💥</div>
+      </div>
+
+      <div id="countdown-wrap" style="display:none;text-align:center">
+        <div class="countdown-num" id="countdown-num">5</div>
+        <div class="countdown-label">Next round starting…</div>
+      </div>
+
+      <div class="crash-multiplier live" id="multiplier-el" style="display:none">1.00x</div>
+    </div>
+
+    <!-- Live players -->
+    <div class="bet-panel" style="margin-bottom:120px">
+      <div class="bet-panel-head">
+        <span id="players-count">Players (0)</span>
+        <span id="round-hash" style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title=""></span>
+      </div>
+      <div class="bet-list" id="bet-list">
+        <div class="no-bets">No bets yet this round</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar: amount stepper / auto-stop / bet-cashout button -->
+  <div class="bottom-bar" id="bottom-bar">
+    <div class="bet-panel" style="margin-bottom:10px">
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="stepper" style="flex:1">
+          <button id="amt-minus">−</button>
+          <input type="number" id="amt-input" value="10" min="1" step="1" style="border:none;background:transparent;padding:6px;text-align:center;box-shadow:none" />
+          <button id="amt-plus">+</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:650">
+          <span>Auto-stop</span>
+          <div class="checkbox" id="autostop-toggle"></div>
+        </div>
+      </div>
+
+      <div class="quick-amounts" id="autostop-presets" style="display:none;margin-top:12px">
+        <input type="number" id="autostop-input" value="2" step="0.1" min="1.01" style="width:70px;padding:8px;font-size:13px" />
+        <button data-mult="1.5">1.5</button>
+        <button data-mult="2">2</button>
+        <button data-mult="5">5</button>
+        <button data-mult="10">10</button>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="bet-btn">Bet ৳ 10</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

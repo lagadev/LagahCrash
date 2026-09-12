@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LagahCrashBot · Admin</title>
+<link rel="stylesheet" href="/css/admin.css" />
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<div id="admin-app">
+  <div class="sidebar">
+    <div class="brand">🛠 Admin Panel</div>
+    <button class="nav-item active" data-view="dashboard">📊 Dashboard</button>
+    <button class="nav-item" data-view="game">🚀 Game</button>
+    <button class="nav-item" data-view="withdrawals">💸 Withdrawals</button>
+    <button class="nav-item" data-view="users">👥 Users</button>
+    <button class="nav-item" data-view="broadcast">📢 Broadcast</button>
+  </div>
+
+  <div class="main">
+
+    <!-- ---------------- Dashboard ---------------- -->
+    <div id="view-dashboard" class="view active">
+      <div class="view-head"><div><h1>Dashboard</h1><p>Overview of LagahCrashBot activity</p></div></div>
+      <div class="stat-cards">
+        <div class="stat-card"><div class="n" id="stat-users">–</div><div class="l">Total Users</div></div>
+        <div class="stat-card"><div class="n" id="stat-deposits">–</div><div class="l">Total Deposits (৳)</div></div>
+        <div class="stat-card"><div class="n" id="stat-withdrawals">–</div><div class="l">Total Withdrawals (৳)</div></div>
+        <div class="stat-card"><div class="n" id="stat-pending">–</div><div class="l">Pending Withdrawals</div></div>
+      </div>
+      <div class="panel">
+        <h3>Pending Withdrawals</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>User</th><th>Amount</th><th>Payout</th><th>Wallet</th><th></th></tr></thead>
+          <tbody id="dash-pending-tbody"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ---------------- Game ---------------- -->
+    <div id="view-game" class="view">
+      <div class="view-head"><div><h1>Game Management</h1><p>Round history and manual crash-point control</p></div></div>
+
+      <div class="panel">
+        <h3>Force Next Round's Crash Point</h3>
+        <p style="color:var(--muted);font-size:13px;margin:0 0 14px">Set the exact multiplier the <b>next</b> round will crash at (e.g. 1.28). It applies once, then clears automatically.</p>
+        <div id="forced-crash-banner"></div>
+        <div class="field-row">
+          <div class="field"><label>Crash Multiplier</label><input type="number" id="force-crash-input" step="0.01" min="1" placeholder="e.g. 1.28" /></div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn primary" onclick="setForcedCrash()">Set Override</button>
+          <button class="btn ghost" onclick="clearForcedCrash()">Clear</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Recent Rounds</h3>
+        <div class="table-wrap"><table>
+          <thead><tr><th>Round</th><th>Crash</th><th>Bets</th><th>Wagered</th><th>Payout</th><th>Started</th></tr></thead>
+          <tbody id="rounds-tbody"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ---------------- Withdrawals ---------------- -->
+    <div id="view-withdrawals" class="view">
+      <div class="view-head"><div><h1>Withdrawals</h1><p>Approve or reject pending withdrawal requests</p></div></div>
+      <div class="panel">
+        <div class="table-wrap"><table>
+          <thead><tr><th>User</th><th>Amount</th><th>Fee</th><th>Payout</th><th>Wallet</th><th>Requested</th><th></th></tr></thead>
+          <tbody id="withdrawals-tbody"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ---------------- Users ---------------- -->
+    <div id="view-users" class="view">
+      <div class="view-head"><div><h1>Users</h1><p>Search, ban, or adjust a player's balance</p></div></div>
+      <div class="panel">
+        <div class="field-row">
+          <div class="field"><label>Search by ID or username</label><input type="text" id="user-search" placeholder="e.g. 123456789" /></div>
+          <div style="display:flex;align-items:flex-end"><button class="btn primary" onclick="loadUsers()">Search</button></div>
+        </div>
+        <div class="table-wrap"><table>
+          <thead><tr><th>ID</th><th>Username</th><th>Balance</th><th>Wagered</th><th>Status</th><th></th></tr></thead>
+          <tbody id="users-tbody"></tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <!-- ---------------- Broadcast ---------------- -->
+    <div id="view-broadcast" class="view">
+      <div class="view-head"><div><h1>Broadcast</h1><p>Send a message to every user</p></div></div>
+      <div class="panel">
+        <div class="field"><label>Message</label>
+          <textarea id="broadcast-text" rows="5" style="width:100%;padding:13px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text);font-size:14px"></textarea>
+        </div>
+        <div style="margin-top:14px"><button class="btn primary" onclick="sendBroadcast()">Send to all users</button></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="/js/admin.js"></script>
+</body>
+</html>
